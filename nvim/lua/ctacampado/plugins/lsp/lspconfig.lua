@@ -2,6 +2,7 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
+    --"nvimtools/none-ls.nvim",
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
     { "folke/neodev.nvim", opts = {} },
@@ -79,6 +80,8 @@ return {
     end
 
     local util = require "lspconfig/util"
+    --local null_ls = require("null-ls")
+    --local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
     mason_lspconfig.setup_handlers({
       ["lua_ls"] = function()
@@ -117,6 +120,47 @@ return {
           },
         })
       end,
+      ["pyright"] = function()
+        lspconfig["pyright"].setup({
+          settings = {
+            pyright = {
+              autoImportCompletion = true,
+            },
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = 'openFilesOnly',
+                useLibraryCodeForTypes = true,
+                typeCheckingMode = 'off',
+              },
+            },
+          },
+        })
+      end,
+      -- ["null-ls"] = function()
+      --   lspconfig["null-ls"].setup({
+      --     sources = {
+      --       null_ls.builtins.formatting.gofumpt,
+      --       null_ls.builtins.formatting.goimports_reviser,
+      --       null_ls.builtins.formatting.golines,
+      --     },
+      --     on_attach = function(client, bufnr)
+      --       if client.supports_method("textDocument/formatting") then
+      --         vim.api.nvim_clear_autocmds({
+      --           group = augroup,
+      --           buffer = bufnr,
+      --         })
+      --         vim.api.nvim_create_autocmd("BufWritePre", {
+      --           group = augroup,
+      --           buffer = bufnr,
+      --           callback = function()
+      --             vim.lsp.buf.format({ bufnr = bufnr })
+      --           end,
+      --         })
+      --       end
+      --     end,
+      --   })
+      -- end
     })
   end,
 }
