@@ -9,6 +9,12 @@ opt.number = true
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 opt.shiftwidth = 2 -- 2 spaces for indent width
 opt.expandtab = true -- expand tab to spaces
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "go",
+    callback = function()
+        vim.opt_local.expandtab = false
+    end,
+})
 opt.autoindent = true -- copy indent from current line when starting new one
 opt.smartindent = true
 

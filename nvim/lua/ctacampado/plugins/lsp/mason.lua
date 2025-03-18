@@ -4,7 +4,7 @@ return {
     ensure_installed = {
       "gofumpt",
       "goimports_reviser",
-      "golines",
+      --"golines",
     },
   },
   dependencies = {
@@ -38,6 +38,9 @@ return {
         "html",
         "lua_ls",
         "pyright",
+        "bashls",
+        "dockerls",
+        "yamlls",
       },
     })
 
